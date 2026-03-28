@@ -30,24 +30,24 @@ class PianoEngine {
         this.noteMap = {
             "C3":  { sample: "C3vH", shift: 0 },
             "Cs3": { sample: "C3vH", shift: 1 },
-            "D3":  { sample: "D#3vH", shift: -1 },
-            "Ds3": { sample: "D#3vH", shift: 0 },
-            "E3":  { sample: "D#3vH", shift: 1 },
-            "F3":  { sample: "F#3vH", shift: -1 },
-            "Fs3": { sample: "F#3vH", shift: 0 },
-            "G3":  { sample: "F#3vH", shift: 1 },
+            "D3":  { sample: "Ds3vH", shift: -1 },
+            "Ds3": { sample: "Ds3vH", shift: 0 },
+            "E3":  { sample: "Ds3vH", shift: 1 },
+            "F3":  { sample: "Fs3vH", shift: -1 },
+            "Fs3": { sample: "Fs3vH", shift: 0 },
+            "G3":  { sample: "Fs3vH", shift: 1 },
             "Gs3": { sample: "A3vH", shift: -1 },
             "A3":  { sample: "A3vH", shift: 0 },
             "As3": { sample: "A3vH", shift: 1 },
             "B3":  { sample: "C4vL", shift: -1 },
             "C4":  { sample: "C4vL", shift: 0 },
             "Cs4": { sample: "C4vL", shift: 1 },
-            "D4":  { sample: "D#4vH", shift: -1 },
-            "Ds4": { sample: "D#4vH", shift: 0 },
-            "E4":  { sample: "D#4vH", shift: 1 },
-            "F4":  { sample: "F#4vH", shift: -1 },
-            "Fs4": { sample: "F#4vH", shift: 0 },
-            "G4":  { sample: "F#4vH", shift: 1 },
+            "D4":  { sample: "Ds4vH", shift: -1 },
+            "Ds4": { sample: "Ds4vH", shift: 0 },
+            "E4":  { sample: "Ds4vH", shift: 1 },
+            "F4":  { sample: "Fs4vH", shift: -1 },
+            "Fs4": { sample: "Fs4vH", shift: 0 },
+            "G4":  { sample: "Fs4vH", shift: 1 },
             "Gs4": { sample: "A4vH", shift: -1 },
             "A4":  { sample: "A4vH", shift: 0 },
             "As4": { sample: "A4vH", shift: 1 },
@@ -64,7 +64,7 @@ class PianoEngine {
         const loadPromises = this.sampleFiles.map(async (sampleName) => {
             try {
                 // Fetch the authentic .wav file
-                const response = await fetch(`sounds/${encodeURIComponent(sampleName)}.wav`);
+                const response = await fetch(`sounds/${sampleName}.wav`);
                 const arrayBuffer = await response.arrayBuffer();
                 const audioBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
                 this.buffers[sampleName] = audioBuffer;
