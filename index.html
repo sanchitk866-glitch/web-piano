@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Piano V2</title>
-    <meta name="description" content="A professional virtual piano with Web Audio API, polyphony, 2 octaves, and recording capabilities.">
+    <title>Symphony | Premium Virtual Piano</title>
+    <meta name="description" content="A professional virtual piano sampler with high-fidelity Web Audio API playback, polyphony, and recording.">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <!-- Atmospheric Background Effects -->
+    <div class="ambient-background">
+        <div class="orb orb-purple"></div>
+        <div class="orb orb-cyan"></div>
+    </div>
+
+    <main class="container glass-main">
         <header>
-            <h1>Virtual Piano</h1>
-            <p>2 Octaves • Web Audio API • True Polyphony</p>
+            <h1 class="glow-text">Symphony</h1>
+            <p class="subtitle">Studio Series • Web Audio Sampler</p>
         </header>
 
-        <!-- Piano Container Wrapper for Overflow Scrolling on Mobile -->
-        <div class="piano-wrapper">
-            <div class="piano-container">
+        <!-- Piano Elements -->
+        <section class="piano-section">
+            <div class="piano-wrapper glass-panel">
                 <ul id="piano" class="piano">
                     <!-- Octave 3 (Lower) -->
                     <li data-note="C3" class="key white" data-key="z"><span>Z</span></li>
@@ -48,30 +54,31 @@
                     <li data-note="B4" class="key white" data-key="u"><span>U</span></li>
                 </ul>
             </div>
-        </div>
+        </section>
 
-        <div class="controls-panel">
+        <!-- Controls Console -->
+        <section class="controls-panel glass-panel">
             <div class="control-group">
                 <label for="master-volume">Volume</label>
-                <input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.8">
+                <input type="range" id="master-volume" class="slider-cyan" min="0" max="1" step="0.01" value="0.8">
             </div>
             
             <div class="control-group switch-group">
                 <label class="sustain-toggle">
                     <input type="checkbox" id="sustain" />
-                    <span class="slider"></span>
-                    Sustain (Spacebar)
+                    <span class="custom-toggle"></span>
+                    Sustain <span>(Space)</span>
                 </label>
             </div>
 
             <div class="control-group record-group">
-                <button id="btn-record" class="btn">🔴 Record</button>
-                <button id="btn-play" class="btn" disabled>▶ Play</button>
+                <button id="btn-record" class="btn btn-record">🔴 Record</button>
+                <button id="btn-play" class="btn btn-play" disabled>▶ Play</button>
             </div>
-        </div>
+        </section>
         
-        <div id="status-message" class="status-message">Loading engine...</div>
-    </div>
+        <div id="status-message" class="status-message">Initializing Audio Engine...</div>
+    </main>
     
     <script src="script.js"></script>
 </body>

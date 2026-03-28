@@ -1,6 +1,7 @@
 /**
  * Virtual Piano V2 Engine
- * Uses Web Audio API for zero-latency, polyphonic playback with ADSR envelopes
+ * Uses Web Audio API for zero-latency, polyphonic playback with pitch-shifting
+ * professional-grade multi-sampled WAV files.
  */
 
 class PianoEngine {
@@ -24,26 +25,57 @@ class PianoEngine {
             "C3", "Cs3", "D3", "Ds3", "E3", "F3", "Fs3", "G3", "Gs3", "A3", "As3", "B3",
             "C4", "Cs4", "D4", "Ds4", "E4", "F4", "Fs4", "G4", "Gs4", "A4", "As4", "B4"
         ];
+
+        // Map each UI note to an authentic multi-sampled WAV and required pitch shift (semitones)
+        this.noteMap = {
+            "C3":  { sample: "C3vH", shift: 0 },
+            "Cs3": { sample: "C3vH", shift: 1 },
+            "D3":  { sample: "D#3vH", shift: -1 },
+            "Ds3": { sample: "D#3vH", shift: 0 },
+            "E3":  { sample: "D#3vH", shift: 1 },
+            "F3":  { sample: "F#3vH", shift: -1 },
+            "Fs3": { sample: "F#3vH", shift: 0 },
+            "G3":  { sample: "F#3vH", shift: 1 },
+            "Gs3": { sample: "A3vH", shift: -1 },
+            "A3":  { sample: "A3vH", shift: 0 },
+            "As3": { sample: "A3vH", shift: 1 },
+            "B3":  { sample: "C4vL", shift: -1 },
+            "C4":  { sample: "C4vL", shift: 0 },
+            "Cs4": { sample: "C4vL", shift: 1 },
+            "D4":  { sample: "D#4vH", shift: -1 },
+            "Ds4": { sample: "D#4vH", shift: 0 },
+            "E4":  { sample: "D#4vH", shift: 1 },
+            "F4":  { sample: "F#4vH", shift: -1 },
+            "Fs4": { sample: "F#4vH", shift: 0 },
+            "G4":  { sample: "F#4vH", shift: 1 },
+            "Gs4": { sample: "A4vH", shift: -1 },
+            "A4":  { sample: "A4vH", shift: 0 },
+            "As4": { sample: "A4vH", shift: 1 },
+            "B4":  { sample: "A4vH", shift: 2 }
+        };
+
+        this.sampleFiles = [...new Set(Object.values(this.noteMap).map(m => m.sample))];
     }
 
     async init() {
-        this.showStatus("Loading audio buffers...");
+        this.showStatus("Loading professional audio samples...");
         let loaded = 0;
         
-        const loadPromises = this.notes.map(async (note) => {
+        const loadPromises = this.sampleFiles.map(async (sampleName) => {
             try {
-                const response = await fetch(`sounds/${note}.wav`);
+                // Fetch the authentic .wav file
+                const response = await fetch(`sounds/${sampleName}.wav`);
                 const arrayBuffer = await response.arrayBuffer();
                 const audioBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
-                this.buffers[note] = audioBuffer;
+                this.buffers[sampleName] = audioBuffer;
                 loaded++;
             } catch (error) {
-                console.error(`Failed to load ${note}.wav`, error);
+                console.error(`Failed to load ${sampleName}.wav`, error);
             }
         });
 
         await Promise.all(loadPromises);
-        this.showStatus(`Loaded ${loaded}/${this.notes.length} sounds`, 2000);
+        this.showStatus(`Loaded studio samples (${loaded}/${this.sampleFiles.length})! Ready!`, 3000);
     }
 
     showStatus(msg, timeout = 0) {
@@ -70,7 +102,8 @@ class PianoEngine {
             this.audioCtx.resume();
         }
 
-        if (!this.buffers[note]) return;
+        const mapping = this.noteMap[note];
+        if (!mapping || !this.buffers[mapping.sample]) return;
 
         // If recording, save the event
         if (this.isRecording) {
@@ -87,7 +120,10 @@ class PianoEngine {
         }
 
         const source = this.audioCtx.createBufferSource();
-        source.buffer = this.buffers[note];
+        source.buffer = this.buffers[mapping.sample];
+        
+        // Pitch shifting via playbackRate (e.g. 2^(1/12) is one semitone up)
+        source.playbackRate.value = Math.pow(2, mapping.shift / 12);
 
         const gainNode = this.audioCtx.createGain();
         gainNode.gain.setValueAtTime(1, this.audioCtx.currentTime);
@@ -111,8 +147,8 @@ class PianoEngine {
 
         if (!this.activeNodes[note]) return;
 
-        // Fade out depending on sustain
-        const fadeOutTime = this.isSustainOn ? 2.5 : 0.15;
+        // Fade out depending on sustain (longer decay for a realistic piano sustain)
+        const fadeOutTime = this.isSustainOn ? 3.0 : 0.25;
         this.stopNoteInternal(note, fadeOutTime);
     }
 
@@ -123,9 +159,10 @@ class PianoEngine {
         const { source, gainNode } = nodeObj;
         const now = this.audioCtx.currentTime;
         
-        // Exponential fade out sounds natural
+        // Exponential fade out sounds natural, especially for acoustic string dampening
         gainNode.gain.setValueAtTime(gainNode.gain.value, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, now + fadeOutDuration);
+        // Avoid setting to exact 0 to prevent glitch, use very small decay floor
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, now + fadeOutDuration);
         
         source.stop(now + fadeOutDuration + 0.1);
         delete this.activeNodes[note];
@@ -242,10 +279,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Mouse & Touch Events
     keys.forEach(key => {
+        // standard clicks
         key.addEventListener('mousedown', () => triggerNoteDown(key));
         key.addEventListener('mouseup', () => triggerNoteUp(key));
         key.addEventListener('mouseleave', () => triggerNoteUp(key));
         
+        // touch interaction
         key.addEventListener('touchstart', (e) => {
             e.preventDefault(); 
             triggerNoteDown(key);
