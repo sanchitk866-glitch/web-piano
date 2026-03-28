@@ -22,7 +22,7 @@ notes_freq = {
     "B": 493.88
 }
 
-sample_rate = 44100
+sample_rate = 44100.0
 duration = 1.5 # seconds
 
 def generate_tone(file_name, freq):
