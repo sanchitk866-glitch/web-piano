@@ -64,7 +64,7 @@ class PianoEngine {
         const loadPromises = this.sampleFiles.map(async (sampleName) => {
             try {
                 // Fetch the authentic .wav file
-                const response = await fetch(`sounds/${sampleName}.wav`);
+                const response = await fetch(`sounds/${encodeURIComponent(sampleName)}.wav`);
                 const arrayBuffer = await response.arrayBuffer();
                 const audioBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
                 this.buffers[sampleName] = audioBuffer;
