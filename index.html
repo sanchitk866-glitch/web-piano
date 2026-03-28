@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Piano</title>
-    <meta name="description" content="A beginner-friendly virtual piano built with HTML, CSS, and JavaScript.">
+    <title>Virtual Piano V2</title>
+    <meta name="description" content="A professional virtual piano with Web Audio API, polyphony, 2 octaves, and recording capabilities.">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -12,34 +12,67 @@
     <div class="container">
         <header>
             <h1>Virtual Piano</h1>
-            <p>Play with your mouse or use the keyboard keys mapped below!</p>
+            <p>2 Octaves • Web Audio API • True Polyphony</p>
         </header>
-        
-        <div class="piano-container">
-            <ul id="piano" class="piano">
-                <li data-note="C" class="key white" data-key="a"><span>A</span></li>
-                <li data-note="Cs" class="key black" data-key="w"><span>W</span></li>
-                <li data-note="D" class="key white" data-key="s"><span>S</span></li>
-                <li data-note="Ds" class="key black" data-key="e"><span>E</span></li>
-                <li data-note="E" class="key white" data-key="d"><span>D</span></li>
-                <li data-note="F" class="key white" data-key="f"><span>F</span></li>
-                <li data-note="Fs" class="key black" data-key="t"><span>T</span></li>
-                <li data-note="G" class="key white" data-key="g"><span>G</span></li>
-                <li data-note="Gs" class="key black" data-key="y"><span>Y</span></li>
-                <li data-note="A" class="key white" data-key="h"><span>H</span></li>
-                <li data-note="As" class="key black" data-key="u"><span>U</span></li>
-                <li data-note="B" class="key white" data-key="j"><span>J</span></li>
-            </ul>
+
+        <!-- Piano Container Wrapper for Overflow Scrolling on Mobile -->
+        <div class="piano-wrapper">
+            <div class="piano-container">
+                <ul id="piano" class="piano">
+                    <!-- Octave 3 (Lower) -->
+                    <li data-note="C3" class="key white" data-key="z"><span>Z</span></li>
+                    <li data-note="Cs3" class="key black" data-key="s"><span>S</span></li>
+                    <li data-note="D3" class="key white" data-key="x"><span>X</span></li>
+                    <li data-note="Ds3" class="key black" data-key="d"><span>D</span></li>
+                    <li data-note="E3" class="key white" data-key="c"><span>C</span></li>
+                    <li data-note="F3" class="key white" data-key="v"><span>V</span></li>
+                    <li data-note="Fs3" class="key black" data-key="g"><span>G</span></li>
+                    <li data-note="G3" class="key white" data-key="b"><span>B</span></li>
+                    <li data-note="Gs3" class="key black" data-key="h"><span>H</span></li>
+                    <li data-note="A3" class="key white" data-key="n"><span>N</span></li>
+                    <li data-note="As3" class="key black" data-key="j"><span>J</span></li>
+                    <li data-note="B3" class="key white" data-key="m"><span>M</span></li>
+                    
+                    <!-- Octave 4 (Upper) -->
+                    <li data-note="C4" class="key white" data-key="q"><span>Q</span></li>
+                    <li data-note="Cs4" class="key black" data-key="2"><span>2</span></li>
+                    <li data-note="D4" class="key white" data-key="w"><span>W</span></li>
+                    <li data-note="Ds4" class="key black" data-key="3"><span>3</span></li>
+                    <li data-note="E4" class="key white" data-key="e"><span>E</span></li>
+                    <li data-note="F4" class="key white" data-key="r"><span>R</span></li>
+                    <li data-note="Fs4" class="key black" data-key="5"><span>5</span></li>
+                    <li data-note="G4" class="key white" data-key="t"><span>T</span></li>
+                    <li data-note="Gs4" class="key black" data-key="6"><span>6</span></li>
+                    <li data-note="A4" class="key white" data-key="y"><span>Y</span></li>
+                    <li data-note="As4" class="key black" data-key="7"><span>7</span></li>
+                    <li data-note="B4" class="key white" data-key="u"><span>U</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="controls-panel">
+            <div class="control-group">
+                <label for="master-volume">Volume</label>
+                <input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.8">
+            </div>
+            
+            <div class="control-group switch-group">
+                <label class="sustain-toggle">
+                    <input type="checkbox" id="sustain" />
+                    <span class="slider"></span>
+                    Sustain (Spacebar)
+                </label>
+            </div>
+
+            <div class="control-group record-group">
+                <button id="btn-record" class="btn">🔴 Record</button>
+                <button id="btn-play" class="btn" disabled>▶ Play</button>
+            </div>
         </div>
         
-        <div class="controls">
-            <label class="sustain-toggle">
-                <input type="checkbox" id="sustain" />
-                <span class="slider"></span>
-                Sustain Pedal (Spacebar)
-            </label>
-        </div>
+        <div id="status-message" class="status-message">Loading engine...</div>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>

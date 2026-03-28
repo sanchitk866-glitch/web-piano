@@ -1,60 +1,66 @@
-# 🎹 Virtual Piano
+# 🎹 Virtual Piano V2
 
-A beautiful, beginner-friendly Virtual Piano project built with raw HTML, CSS, and JavaScript. This project is interactive, playable via mouse touches or keyboard, and uses Python to synthesize offline sound files.
+A professional-grade, beginner-friendly Virtual Piano project built with raw HTML, CSS, and modern JavaScript. This project uses the **Web Audio API** to deliver zero-latency playback, true polyphony, and an authentic piano feel across two full octaves—no frameworks required!
 
-## Features
-- Interactive piano with one full octave (C4 to B4).
-- Both **White** and **Black** keys realistically positioned using Flexbox & absolute positioning.
-- Modern CSS styling including shadows, beautiful gradients, and micro-animations.
-- Polyphonic sounds handling (multiple keys can be pressed).
-- Fully mapped computer keyboard controls.
-- Clean, thoroughly commented, framework-free code snippet collection.
-- A Python sound-synthesizer module included to auto-generate the piano offline notes.
+## 🚀 Version 2 Features
+- **Web Audio API Engine:** Preloads audio buffers into memory for mathematically zero-latency sound triggering.
+- **Two Full Octaves:** Play notes from `C3` (Lower octave) all the way to `B4` (Upper octave).
+- **True Polyphony:** Play unlimited keys simultaneously; the engine manages active `AudioBufferSourceNode` objects dynamically.
+- **ADSR Sustain Envelope:** Enjoy natural, instrument-like volume fade-outs. Use the 'Sustain' toggle (Spacebar) to let notes ring out or fade rapidly.
+- **Recording Loop:** Record your own symphonies! Click 'Record', play your notes, and hit 'Play' to watch the keys automatically trigger the audio engine at your exact playback timestamps.
+- **Master Volume:** Fully adjustable master output.
+- **Python Synthesizer:** Includes `generate_sounds.py` to recursively synthesize raw `.wav` files perfectly tuned for the piano.
 
-## File Structure
-- `index.html`: The HTML structure of the piano.
-- `style.css`: All the aesthetics and layout rules making the app look great.
-- `script.js`: DOM manipulation & event listeners for interactivity and sound routing.
-- `generate_sounds.py`: A Python script which synthesizes the audio files using pure math. 
-- `sounds/`: Contains the generated `.wav` audio files.
+## 📁 File Structure
+- `index.html`: The HTML structure of the piano (controls, wrappers, keys).
+- `style.css`: A dynamic layout utilizing modern CSS variables, Neon Box-Shadows, and responsive horizontal scrolling.
+- `script.js`: State-of-the-Art ES6 Javascript Engine handling Audio Contexts and the Event Loop.
+- `generate_sounds.py`: The Python sound synthesis script.
+- `sounds/`: Contains the generated 24 `.wav` audio files.
 
-## Local Setup
+## 🛠 Local Setup
 
 ### 1. Generating the Audio Files
 In order for the project to play sounds right away, we have synthesized placeholder `.wav` wavefiles via python. 
-To build the sound files, open your terminal in this directory and run:
+To build the 2-octave set, open your terminal in this directory and run:
 
 ```bash
 python generate_sounds.py
 ```
-
-It will create a folder called `sounds/` and build `C.wav`, `Cs.wav`, `D.wav`, and so forth.
+*(This creates `C3.wav` through `B4.wav` in the `sounds/` directory)*
 
 ### 2. View the App
-Simply drag and drop `index.html` into any web browser!
-Alternatively, you can run a local development server via Python (optional):
+Because this project utilizes the advanced `Web Audio API` (`fetch()` array buffers), you must run it over a local web server (Browser security prevents fetching local files over `file:///`).
+
+Run a local development server via Python:
 
 ```bash
+# Python 3
 python -m http.server 8000
+
+# Python 2
+python -m SimpleHTTPServer 8000
 ```
-Then go to `http://localhost:8000` in your web browser.
+Then visit **`http://localhost:8000`** in your web browser.
 
-## Keyboard Shortcuts
+## 🎹 Keyboard Shortcuts
 
-| Keyboard Key | Piano Note | Key Type |
+The keyboard layout is intuitively mapped across two octaves for maximum reachability.
+
+| Note Range | Piano Keys | Mapped Keyboard |
 |---|---|---|
-| A | C (Do) | White |
-| W | C# (Do Sharp) | Black |
-| S | D (Re) | White |
-| E | D# (Re Sharp) | Black |
-| D | E (Mi) | White |
-| F | F (Fa) | White |
-| T | F# (Fa Sharp) | Black |
-| G | G (Sol) | White |
-| Y | G# (Sol Sharp) | Black |
-| H | A (La) | White |
-| U | A# (La Sharp) | Black |
-| J | B (Ti) | White |
+| **Octave 1 (Lower)** | White Keys (C3 - B3) | `Z`, `X`, `C`, `V`, `B`, `N`, `M` |
+| | Black Keys (Cs3 - As3) | `S`, `D`, `G`, `H`, `J` |
+| **Octave 2 (Upper)** | White Keys (C4 - B4) | `Q`, `W`, `E`, `R`, `T`, `Y`, `U` |
+| | Black Keys (Cs4 - As4) | `2`, `3`, `5`, `6`, `7` |
+
+### Controls
+| Control | Action |
+|---|---|
+| **Spacebar** | Toggle Sustain Pedal ON / OFF |
+| **Record Button** | Starts recording your keystrokes |
+| **Play Button** | Plays back the recorded sequence perfectly |
+| **Volume Slider**| Adjusts the `GainNode` output |
 
 ---
 Enjoy making music!
