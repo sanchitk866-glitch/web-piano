@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Piano</title>
+    <meta name="description" content="A beginner-friendly virtual piano built with HTML, CSS, and JavaScript.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Virtual Piano</h1>
+            <p>Play with your mouse or use the keyboard keys mapped below!</p>
+        </header>
+        
+        <div class="piano-container">
+            <ul id="piano" class="piano">
+                <li data-note="C" class="key white" data-key="a"><span>A</span></li>
+                <li data-note="Cs" class="key black" data-key="w"><span>W</span></li>
+                <li data-note="D" class="key white" data-key="s"><span>S</span></li>
+                <li data-note="Ds" class="key black" data-key="e"><span>E</span></li>
+                <li data-note="E" class="key white" data-key="d"><span>D</span></li>
+                <li data-note="F" class="key white" data-key="f"><span>F</span></li>
+                <li data-note="Fs" class="key black" data-key="t"><span>T</span></li>
+                <li data-note="G" class="key white" data-key="g"><span>G</span></li>
+                <li data-note="Gs" class="key black" data-key="y"><span>Y</span></li>
+                <li data-note="A" class="key white" data-key="h"><span>H</span></li>
+                <li data-note="As" class="key black" data-key="u"><span>U</span></li>
+                <li data-note="B" class="key white" data-key="j"><span>J</span></li>
+            </ul>
+        </div>
+        
+        <div class="controls">
+            <label class="sustain-toggle">
+                <input type="checkbox" id="sustain" />
+                <span class="slider"></span>
+                Sustain Pedal (Spacebar)
+            </label>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

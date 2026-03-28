@@ -1,0 +1,154 @@
+/* Body and Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+    color: #00d2ff;
+}
+
+header p {
+    font-size: 1rem;
+    color: #b0b0c0;
+    margin-bottom: 2rem;
+}
+
+/* Piano Container */
+.piano-container {
+    background: #111;
+    padding: 20px 20px 0 20px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.5);
+    display: inline-block;
+}
+
+.piano {
+    display: flex;
+    position: relative;
+    list-style: none;
+    user-select: none;
+}
+
+/* White Keys */
+.key.white {
+    width: 60px;
+    height: 250px;
+    background: linear-gradient(to bottom, #fff 0%, #f0f0f0 100%);
+    border: 1px solid #ccc;
+    border-radius: 0 0 5px 5px;
+    box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #fff, inset 1px 0 0 #fff, inset -1px 0 0 #fff, 0 4px 6px rgba(0, 0, 0, 0.5);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 15px;
+    cursor: pointer;
+    transition: background 0.1s, box-shadow 0.1s, transform 0.1s;
+    z-index: 1;
+}
+
+.key.white span {
+    color: #333;
+    font-weight: 600;
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+.key.white:active, .key.white.active {
+    background: #e0e0e0;
+    box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #fff, inset 1px 0 0 #fff, inset -1px 0 0 #fff, 0 1px 2px rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+}
+
+/* Black Keys */
+.key.black {
+    width: 40px;
+    height: 150px;
+    background: linear-gradient(to bottom, #333 0%, #000 100%);
+    border-radius: 0 0 4px 4px;
+    box-shadow: inset 0 1px 0 #555, 0 3px 5px rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 15px;
+    cursor: pointer;
+    transition: background 0.1s, box-shadow 0.1s, transform 0.1s;
+    z-index: 2;
+}
+
+.key.black span {
+    color: #aaa;
+    font-weight: 600;
+    font-size: 0.8rem;
+    pointer-events: none;
+}
+
+.key.black:active, .key.black.active {
+    background: linear-gradient(to bottom, #222 0%, #000 100%);
+    box-shadow: inset 0 1px 0 #333, 0 1px 2px rgba(0, 0, 0, 0.6);
+    transform: translateY(2px);
+}
+
+/* Positioning Black Keys */
+/* Each white key is 60px wide, black key is 40px wide */
+/* Cs is between C(0) and D(60), so center it at 60px -> left: 60 - 20 = 40px */
+.key.black[data-note="Cs"] { left: 40px; }
+.key.black[data-note="Ds"] { left: 100px; }
+.key.black[data-note="Fs"] { left: 220px; }
+.key.black[data-note="Gs"] { left: 280px; }
+.key.black[data-note="As"] { left: 340px; }
+
+/* Controls/Sustain */
+.controls {
+    margin-top: 2rem;
+    font-size: 1rem;
+}
+
+.controls label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #00d2ff;
+}
+
+/* Simple mobile responsiveness */
+@media (max-width: 600px) {
+    .key.white { width: 40px; height: 180px; }
+    .key.black { width: 26px; height: 100px; }
+    .key.black[data-note="Cs"] { left: 27px; }
+    .key.black[data-note="Ds"] { left: 67px; }
+    .key.black[data-note="Fs"] { left: 147px; }
+    .key.black[data-note="Gs"] { left: 187px; }
+    .key.black[data-note="As"] { left: 227px; }
+    
+    header h1 { font-size: 1.8rem; }
+    header p { font-size: 0.8rem; }
+}
